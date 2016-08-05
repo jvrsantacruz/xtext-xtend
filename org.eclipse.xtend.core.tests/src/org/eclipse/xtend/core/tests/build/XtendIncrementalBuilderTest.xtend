@@ -400,4 +400,55 @@ class XtendIncrementalBuilderTest extends AbstractIncrementalBuilderTest {
 		])
 		assertTrue(issues.toString, issues.isEmpty)
 	}
+
+	@Test def void testGrammarAccessproblem() {
+		val buildRequest = newBuildRequest [
+			dirtyFiles = #[
+
+				'src/mypack/FakeIssue60GrammarAccess.java' - '''
+					package mypack;
+					public class FakeIssue60GrammarAccess {
+						
+						private final GreetingElements pGreeting;
+						
+						public FakeIssue60GrammarAccess() {
+							this.pGreeting = new GreetingElements();
+						}
+						
+						public class GreetingElements {
+							
+							public String getHelloKeyword_0() { return null; }
+							
+						}
+						
+						public GreetingElements getGreetingAccess() {
+							return pGreeting;
+						}
+					
+					}
+				''',
+				'src/mypack/Demo.xtend' - '''
+					package mypack
+					
+					import mypack.FakeIssue60GrammarAccess$GreetingElements
+					
+					class Demo {
+						
+						extension mypack.FakeIssue60GrammarAccess
+						
+						GreetingElements elements
+						
+						def void format() {
+							greetingAccess.helloKeyword_0
+							println(elements)
+						}
+						
+					}
+				'''
+			]
+		]
+		build(buildRequest)
+		assertTrue(issues.toString, issues.isEmpty)
+		assertEquals(2, generated.size)
+	}
 }
