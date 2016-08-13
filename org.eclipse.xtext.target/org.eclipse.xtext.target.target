@@ -31,7 +31,7 @@
 <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtext.gwt.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtext.redist.feature.group" version="0.0.0"/>
-<repository location="http://services.typefox.io/open-source/jenkins/job/xtext-eclipse/job/master/lastStableBuild/artifact/build/p2-repository/"/>
+<repository location="http://services.typefox.io/open-source/jenkins/job/xtext-eclipse/job/cd_bug440006/lastStableBuild/artifact/build/p2-repository/"/>
 </location>
 
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
