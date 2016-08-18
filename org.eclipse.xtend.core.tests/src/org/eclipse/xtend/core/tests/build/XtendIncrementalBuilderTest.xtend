@@ -451,4 +451,34 @@ class XtendIncrementalBuilderTest extends AbstractIncrementalBuilderTest {
 		assertTrue(issues.toString, issues.isEmpty)
 		assertEquals(2, generated.size)
 	}
+
+	@Test def void testInnerClassEnumProblem() {
+		val buildRequest = newBuildRequest [
+			dirtyFiles = #[
+
+				'src/mypack/EnumTest.java' - '''
+					package mypack;
+					public class EnumTest {
+						public enum AB {
+							A,
+							B
+						}
+					}
+
+				''',
+				'src/mypack/Demo.xtend' - '''
+					package mypack
+					class Demo {
+						def void format() {
+							var EnumTest.AB x = EnumTest.AB.A
+							println(x)
+						}
+					}
+				'''
+			]
+		]
+		build(buildRequest)
+		assertTrue(issues.toString, issues.isEmpty)
+		assertEquals(2, generated.size)
+	}
 }
